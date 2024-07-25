@@ -70,3 +70,10 @@ resource "aws_vpc" "my_vpc" {
   value = aws_instance.euer-lieblings-gebäck.public_ip
    
  }
+
+
+ # aufgabe2 
+ # Welchen Unterschied gibt es bei dein Regeln für ausgehenden Datenverkehr?
+# Antwort:  bei der defalut wird ausgehnder daten verkewhr erlaubt und bei der andern fehlte es 
+# Was hat dieser Unterschied für Folgen für eine Verbindung mit der EC2-Instanz?
+# die sitzung kann nicht verbunden werden time out 
