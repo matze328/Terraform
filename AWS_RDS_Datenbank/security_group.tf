@@ -1,3 +1,4 @@
+# Sicherheitsgruppe für die RDS-Instanz erstellen
 resource "aws_security_group" "rds_sg" {
   vpc_id = aws_vpc.my_vpc.id
 
