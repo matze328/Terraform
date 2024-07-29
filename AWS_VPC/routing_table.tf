@@ -17,3 +17,7 @@ resource "aws_route_table_association" "my_route_table_association" {
   subnet_id      = aws_subnet.my_subnet.id           # meine erstellte Subnetz ID
   route_table_id = aws_route_table.my_route_table.id # meine erstellte RoutingTabelle ID
 }
+resource "aws_route_table_association" "my_route_table_association2" {
+  subnet_id      = aws_subnet.public_2.id        # meine erstellte Subnetz ID
+  route_table_id = aws_route_table.my_route_table.id # meine erstellte RoutingTabelle ID
+}
