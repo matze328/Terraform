@@ -30,7 +30,6 @@ resource "aws_security_group" "http" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-
   egress {
     from_port   = 0
     to_port     = 0
@@ -45,27 +44,24 @@ resource "aws_security_group" "http" {
 
 # Erstelle eine EC2-Instance
 resource "aws_instance" "web" {
+  count                  = 3
   ami                    = "ami-01e444924a2233b07" # Ubuntu Server 20.04 LTS für eu-central-1
   instance_type          = "t2.micro"
   subnet_id              = data.terraform_remote_state.vpc.outputs.public_subnet_id_1a # Nutzt ein öffentliches Subnetz
   vpc_security_group_ids = [aws_security_group.http.id]                                # Nutzt VPC-Security-Gruppen
   key_name               = "popel123"
 
-  user_data = <<-EOF
-              #!/bin/bash
-              apt-get update
-              apt-get install -y apache2
-              echo "<html><body><h1>Hello, World</h1></body></html>" > /var/www/html/index.html
-              systemctl enable apache2
-              systemctl start apache2
-              EOF
-
   tags = {
-    Name = "web-server"
+    Name = "web-instance-${count.index}"
   }
 }
 
-# Output der Instance IP-Adresse
-output "instance_ip" {
-  value = aws_instance.web.public_ip
+# Output der IP-Adressen aller Instanzen
+output "instance_ips" {
+  value = [for instance in aws_instance.web : instance.public_ip]
+}
+
+# Output der IP-Adresse der ersten Instanz
+output "first_instance_ip" {
+  value = aws_instance.web[0].public_ip
 }
