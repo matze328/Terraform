@@ -2,8 +2,12 @@
   hosts: servers
   become: yes
   tasks:
-    - name: Install Nginx on webservers
-      apt:
+     - name: Update apt cache
+       apt:
+        update_cache: yes
+
+     - name: Install Nginx on webservers
+       apt:
         name: nginx
         state: present
 
